@@ -3,7 +3,7 @@ import axiosClient from "../api/axiosClient";
 import { useStateContext } from "../contexts/ContextProvider";
 
 const Login = () => {
-  const { setUser, setToken } = useStateContext();
+  const { setUser, setToken, message } = useStateContext();
   const emailRef = useRef();
   const passwordRef = useRef();
   const [gagal, setGagal] = useState(null);
@@ -20,6 +20,7 @@ const Login = () => {
     axiosClient
       .post("/login", payload)
       .then((response) => {
+        console.log(response.data.user);
         const data = response.data;
         if (data) {
           setUser(data.user);
@@ -39,12 +40,18 @@ const Login = () => {
   return (
     <div className=" flex h-screen w-full items-center ">
       <div className="max-w-lg mx-auto w-full p-4 bg-white shadow-lg rounded-md border">
+        {message && (
+          <div role="alert" className="alert alert-success my-3">
+            <span className="text-white">{message}</span>
+          </div>
+        )}
         <h2 className="text-center text-2xl font-bold">Login</h2>
         {gagal && (
           <div role="alert" className="alert alert-error my-3">
             <span className="text-white">{gagal.msg}</span>
           </div>
         )}
+
         {emailE && (
           <div className="bg-red-500 text-white p-4 my-3 rounded-lg">
             <h3 className="block">{emailE}</h3>

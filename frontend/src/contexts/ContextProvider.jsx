@@ -3,13 +3,16 @@ import { createContext, useContext, useState } from "react";
 const StateContext = createContext({
   user: null,
   token: null,
+  message: null,
   setUser: () => {},
   setToken: () => {},
+  setMessage: () => {},
 });
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [token, _setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
+  const [message, setMessage] = useState(null);
 
   const setToken = (token) => {
     _setToken(token);
@@ -27,6 +30,8 @@ export const ContextProvider = ({ children }) => {
         token,
         setToken,
         setUser,
+        message,
+        setMessage,
       }}
     >
       {children}

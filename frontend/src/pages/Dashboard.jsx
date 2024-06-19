@@ -1,5 +1,12 @@
+import { useStateContext } from "../contexts/ContextProvider";
+
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  const { user, token } = useStateContext();
+  return (
+    <>
+      <div>{user.name}</div>
+    </>
+  );
 };
 
 export default Dashboard;

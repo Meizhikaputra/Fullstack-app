@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axiosClient from "../../api/axiosClient";
+import { FaCartPlus, FaMoneyCheck } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const CardProduct = () => {
   const [products, setProducts] = useState([]);
@@ -26,7 +28,18 @@ const CardProduct = () => {
           <h2 className="card-title">{product.name}</h2>
           <h4>Rp. {product.price}</h4>
           <div className="card-actions">
-            <button className="btn btn-primary">Buy Now</button>
+            <Link
+              className="border rounded-full text-fuchsia-400 border-fuchsia-400 p-4 hover:bg-fuchsia-500 hover:text-white"
+              to={`${product.id}`}
+            >
+              <FaCartPlus />
+            </Link>
+            <Link
+              className="border rounded-full text-fuchsia-400 border-fuchsia-400 p-4 hover:bg-fuchsia-500 hover:text-white"
+              to={`${product.id}`}
+            >
+              <FaMoneyCheck />
+            </Link>
           </div>
         </div>
       </div>

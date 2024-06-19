@@ -25,10 +25,13 @@ class AuthController extends Controller
     {
         $validated = $request->validated();
         $user = $this->authService->login($validated);
+        $userLogin = Auth::user();
         if ($user) {
             return response()->json([
                 'msg' => 'Login berhasil',
-                'token' => $user
+                'token' => $user,
+                'user' => $userLogin
+
             ]);
         } elseif ($user === null) {
             return response()->json([

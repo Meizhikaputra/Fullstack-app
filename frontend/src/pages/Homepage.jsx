@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import CardProduct from "../components/fragments/CardProduct";
 import Navbar from "../components/fragments/Navbar";
-import axiosClient from "../api/axiosClient";
 
 const Homepage = () => {
   return (

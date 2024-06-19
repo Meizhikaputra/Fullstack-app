@@ -1,8 +1,20 @@
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../contexts/ContextProvider";
+import axiosClient from "../../api/axiosClient";
 
 const Navbar = () => {
-  const { token } = useStateContext();
+  const { token, setToken, setUser, setMessage } = useStateContext();
+
+  const onLogout = (ev) => {
+    ev.preventDefault();
+
+    axiosClient.post("/logout").then((response) => {
+      const msg = response.data.msg;
+      setToken(null);
+      setMessage(msg);
+      setUser({});
+    });
+  };
 
   return (
     <div className="navbar bg-fuchsia-700 px-8">
@@ -92,7 +104,7 @@ const Navbar = () => {
                   <a>Settings</a>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <Link onClick={onLogout}>Logout</Link>
                 </li>
               </ul>
             </div>
