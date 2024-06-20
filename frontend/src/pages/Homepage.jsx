@@ -1,5 +1,6 @@
 import CardProduct from "../components/fragments/CardProduct";
 import Navbar from "../components/fragments/Navbar";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const Homepage = () => {
   return (

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Product;
+use App\Policies\ProductPolicy;
 use App\Services\AuthService;
 use App\Services\Impl\AuthServiceImpl;
 use Illuminate\Contracts\Support\DeferrableProvider;
@@ -19,6 +21,8 @@ class AuthServiceProvider extends ServiceProvider implements DeferrableProvider
             AuthService::class
         ];
     }
+
+
 
     /**
      * Register services.

@@ -4,20 +4,32 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
-class ProductControler extends Controller
+class ProductController extends Controller
 {
+    use AuthorizesRequests;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        // $this->authorize('viewAny', Product::class);
         $products = Product::all();
+
         return response()->json([
             'count' => $products->count(),
-            'products' => $products,
+            'products' => $products
         ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -25,13 +37,21 @@ class ProductControler extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json($request);
+        //
     }
 
     /**
      * Display the specified resource.
      */
     public function show(Product $product)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Product $product)
     {
         //
     }
