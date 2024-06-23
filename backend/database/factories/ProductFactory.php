@@ -19,7 +19,7 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->name(),
             'description' => fake()->sentence(),
-            'price' => '1000000',
+            'price' => 10000,
 
         ];
     }

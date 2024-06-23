@@ -1,7 +1,7 @@
 import { useStateContext } from "../contexts/ContextProvider";
 
 const Dashboard = () => {
-  const { user, token } = useStateContext();
+  const { user } = useStateContext();
   return (
     <>
       <div>{user.name}</div>

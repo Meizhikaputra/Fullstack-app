@@ -27,6 +27,9 @@ const Navbar = () => {
             <Link to={"/homepage"} className="mx-5 bold">
               Homepage
             </Link>
+            <Link to={"/products"} className="mx-5">
+              Products
+            </Link>
             <Link to={"/dashboard"} className="mx-5">
               Dashboard
             </Link>

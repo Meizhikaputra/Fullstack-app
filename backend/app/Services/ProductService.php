@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use Illuminate\Http\Request;
+
 interface ProductService
 {
-    function store($product);
+    function store(Request $product);
 }

@@ -7,6 +7,7 @@ import DefaultLayout from "./components/DefaultLayout";
 import GuestLayout from "./components/GuestLayout";
 import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
+import Products from "./pages/Products";
 
 const router = createBrowserRouter([
   // Page For All User
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard",
         element: <Dashboard />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
       },
     ],
   },

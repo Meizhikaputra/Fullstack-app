@@ -14,8 +14,8 @@ Route::controller(AuthController::class)->group(function () {
 
 Route::controller(ProductController::class)->group(function () {
     Route::get('/products', 'index');
-    Route::post('/products', 'index')->middleware('a');
-    Route::get('/products', 'index');
+    Route::post('/products', 'store')->middleware('auth:sanctum');
+    Route::get('products/{id}', 'show');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

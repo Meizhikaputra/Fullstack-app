@@ -3,13 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Resources\ProductCollection;
 use App\Models\Product;
+use App\Services\ProductService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     use AuthorizesRequests;
+    protected $productSevice;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productSevice = $productService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -17,27 +27,36 @@ class ProductController extends Controller
     {
         // $this->authorize('viewAny', Product::class);
         $products = Product::all();
-
-        return response()->json([
-            'count' => $products->count(),
-            'products' => $products
-        ]);
+        return new ProductCollection($products);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+
+        if ($request->file('image')) {
+            $validated['image'] = $request->file('image')->store('images-product');
+        }
+
+
+        $data = Product::create($validated);
+        if ($data) {
+            return response()->json([
+                'msg' => 'Berhasil menambahkan product baru',
+                'data' => $data
+            ], 200);
+        } else {
+
+            return response()->json([
+                'msg' => 'Gagal menambahkan product baru',
+
+            ], 500);
+        }
     }
 
     /**
