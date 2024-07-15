@@ -1,9 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 import Navbar from "./fragments/Navbar";
+import CartBar from "./fragments/CartBar";
 
 const GuestLayout = () => {
-  const { token } = useStateContext();
+  const { token, cartOpen } = useStateContext();
 
   if (token) {
     return <Navigate to="/" />;
@@ -12,6 +13,7 @@ const GuestLayout = () => {
   return (
     <div>
       <Navbar />
+      {cartOpen && <CartBar />}
       <div className="">
         <Outlet />
       </div>

@@ -8,6 +8,8 @@ import GuestLayout from "./components/GuestLayout";
 import Dashboard from "./pages/Dashboard";
 import Homepage from "./pages/Homepage";
 import Products from "./pages/Products";
+import DetailProduct from "./pages/DetailProduct";
+import EditProduct from "./pages/EditProduct";
 
 const router = createBrowserRouter([
   // Page For All User
@@ -15,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/homepage",
     element: <Homepage />,
+  },
+  {
+    path: "/products/:id",
+    element: <DetailProduct />,
   },
 
   // DEFAULT LAYOUT FOR USER AUTH------------------
@@ -37,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+      },
+      {
+        path: "/products/edit/:id",
+        element: <EditProduct />,
       },
     ],
   },

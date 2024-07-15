@@ -2,10 +2,12 @@ import { useRef, useState } from "react";
 import axiosClient from "../../api/axiosClient";
 import { useStateContext } from "../../contexts/ContextProvider";
 import { useSnackbar } from "notistack";
+import { formatToRupiah, getProducts } from "../../api/productApi";
 
-const ModalProduct = ({ closeModal }) => {
+const ModalProduct = ({ closeModal, setProducts }) => {
   const { setMessage } = useStateContext();
 
+  const [price, setPrice] = useState();
   const { enqueueSnackbar } = useSnackbar();
 
   const nameRef = useRef();
@@ -14,6 +16,9 @@ const ModalProduct = ({ closeModal }) => {
   const imageRef = useRef();
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState();
+  const [eName, setEName] = useState();
+  const [eDescription, setEDescription] = useState();
+  const [ePrice, setEPrice] = useState();
 
   const handleFileChange = (ev) => {
     const file = ev.target.files[0];
@@ -26,6 +31,12 @@ const ModalProduct = ({ closeModal }) => {
       setImageUrl(null);
     }
   };
+
+  const handlePrice = (ev) => {
+    setPrice(formatToRupiah(ev.target.value));
+    console.log(price);
+  };
+
   const handleSubmit = (ev) => {
     ev.preventDefault();
 
@@ -41,15 +52,23 @@ const ModalProduct = ({ closeModal }) => {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => {
+      .then(async (res) => {
+        console.log(res);
         setMessage(res.data.msg);
         closeModal();
         enqueueSnackbar("Berhasil Menambahkan Produk Baru", {
           variant: "success",
         });
+        const data = await getProducts();
+        setProducts(data);
       })
       .catch((error) => {
-        setMessage(error.data);
+        const response = error.response;
+        if (response && response.status === 422) {
+          setEName(response.data.errors.name[0]);
+          setEDescription(response.data.errors.description[0]);
+          setEPrice(response.data.errors.price[0]);
+        }
       });
   };
 
@@ -77,28 +96,57 @@ const ModalProduct = ({ closeModal }) => {
               className=" w-full"
               encType="multipart/form-data"
             >
-              <input
-                type="text"
-                placeholder="Nama Product"
-                className="input input-bordered input-primary w-full max-w-xl mt-3 "
-                ref={nameRef}
-                name="name"
-              />
+              <label className="form-control w-full max-w-lg">
+                <div className="label">
+                  {eName && (
+                    <span className="label-text text-red-500">{eName}</span>
+                  )}
+                </div>
+                <input
+                  type="text"
+                  placeholder="Nama Product"
+                  className="input input-bordered input-primary w-full max-w-xl "
+                  ref={nameRef}
+                  name="name"
+                />
+              </label>
+              <label className="form-control w-full max-w-lg">
+                <div className="label">
+                  {eDescription && (
+                    <span className="label-text text-red-500">
+                      {eDescription}
+                    </span>
+                  )}
+                </div>
+                <input
+                  type="text"
+                  placeholder="Deskripsi"
+                  className="input input-bordered input-primary w-full max-w-xl "
+                  ref={descriptionRef}
+                  name="description"
+                />
+              </label>
+              <label className="form-control w-full max-w-lg">
+                <div className="label">
+                  {ePrice && (
+                    <span className="label-text text-red-500">{ePrice}</span>
+                  )}
+                </div>
+                <div className="label">
+                  {price && (
+                    <span className="label-text text-red-500">{price}</span>
+                  )}
+                </div>
+                <input
+                  type="text"
+                  placeholder="harga"
+                  className="input input-bordered input-primary w-full max-w-xl "
+                  ref={priceRef}
+                  onChange={(ev) => handlePrice(ev)}
+                  name="name"
+                />
+              </label>
 
-              <input
-                type="text"
-                placeholder="Deskripsi"
-                className="input input-bordered input-primary w-full max-w-xl mt-3"
-                ref={descriptionRef}
-                name="description"
-              />
-              <input
-                type="text"
-                placeholder="Harga"
-                className="input input-bordered input-primary w-full max-w-xl mt-3"
-                ref={priceRef}
-                name="price"
-              />
               {imageUrl && (
                 <div className="my-5">
                   <p>Image Preview:</p>

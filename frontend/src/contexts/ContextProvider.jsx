@@ -4,16 +4,21 @@ const StateContext = createContext({
   user: null,
   token: null,
   message: null,
+  cartOpen: false,
   setUser: () => {},
   setToken: () => {},
   setMessage: () => {},
+  setCartOpen: () => {},
+  closeCart: () => {},
 });
 
 export const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [token, _setToken] = useState(localStorage.getItem("ACCESS_TOKEN"));
   const [message, setMessage] = useState(null);
+  const [cartOpen, setCartOpen] = useState(false);
 
+  const closeCart = () => setCartOpen(false);
   const setToken = (token) => {
     _setToken(token);
     if (token) {
@@ -32,6 +37,9 @@ export const ContextProvider = ({ children }) => {
         setUser,
         message,
         setMessage,
+        cartOpen,
+        setCartOpen,
+        closeCart,
       }}
     >
       {children}
